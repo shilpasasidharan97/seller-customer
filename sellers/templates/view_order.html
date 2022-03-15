@@ -19,7 +19,6 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th scope="col">Sl.No</th>
                             <th scope="col">Customer name</th>
                             <th scope="col">Address</th>
                             <th scope="col">Product Name</th>
@@ -29,6 +28,17 @@
                             <th scope="col">Status</th>
                         </tr>
                     </thead>
+                    {% for sellerproduct in order %}
+                    <tr>
+                        <td>{{sellerproduct.customer_id.cust_name |title}}</td>
+                        <td>{{sellerproduct.shipping_address}}</td>
+                        <td>{{sellerproduct.product_id.product_name}}</td>
+                        <td>{{sellerproduct.quantity}}</td>
+                        <td>{{sellerproduct.total_amount}}</td>
+                        <td>{{sellerproduct.order_date}}</td>
+                        <td>{{sellerproduct.status}}</td>
+                    </tr>
+                    {% endfor %}
                 </table>
 
             </div>

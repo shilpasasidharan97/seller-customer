@@ -8,6 +8,19 @@
     <!-- Bootstrap CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+    {% comment %} Ajax jquery CDN {% endcomment %}
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+    {% comment %} style  {% endcomment %}
+    <style>
+        .errorlist{
+            color: red;
+            list-style-type: none;
+        }
+    </style>
+
+
 </head>
 <body>
     <div class="container">
@@ -15,21 +28,30 @@
             <div class="col-lg-3"></div>
             <div class="col-lg-6 mt-5"  style="text-align: center;">
                 <h2>Customer Registration Form</h2>
-                <form action="" method="POST" class="mt-5">
-                    {% csrf_token %}
-                    <label for="">Customer Name :</label>
-                    <input type="text" name="cname"> <br><br>
-
-                    <label for="">Email id :</label>
-                    <input type="email" name="cemail"><br><br>
-
-                    <label for="">Phone Number :</label>
-                    <input type="number" name="cphoneno"><br><br>
-
-                    <label for="">Password :</label>
-                    <input type="text" name="cpsw"><br><br>
-
-                    <button >SUBMIT</button>
+                <form action="" method="POST" class="mt-5" style="text-align: justify;">
+                    {% csrf_token %} 
+                    <table style="margin-left: 150px;">
+                        <tr>
+                            <td>{{form.cust_name.label}} </td>
+                            <td>{{form.cust_name}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{form.cust_email.label}}</td>
+                            <td>{{form.cust_email}}</td>
+                            <td><span id="error"></span></td>
+                        </tr>
+                        <tr>
+                            <td>{{form.cust_phone_no.label}}</td>
+                            <td>{{form.cust_phone_no}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{form.cust_password.label}}</td>
+                            <td>{{form.cust_password}}</td>
+                            <td>{{form.cust_password.errors}}
+                        </tr>
+                        
+                    </table><br />
+                    <button style="margin-left: 100px;">SUBMIT</button>
 
                 </form><br><br>
                 <p>Alredy Have an accout?</p><a href="{% url 'common:customlogin' %}">Login</a>
@@ -37,5 +59,36 @@
         </div>
     </div>
     {{message}}
+
+
+    {
+        <script>
+        $(document).ready(function(){
+            $('#id_cust_email').change(function(){
+                $.ajaxSetup({
+            headers: {
+              "X-CSRFToken": $('[name=csrfmiddlewaretoken]').val()
+                }
+            })
+                $.ajax({
+                    url:'http://127.0.0.1:8000/checkcustemail',
+                    data:{
+                        'email':document.getElementById('id_cust_email').value
+                    },
+                    type:'POST',
+                    success:function(response){
+                        if(response.status == true){
+                            $('#error').html('Email alreadt exist')
+                        }
+                        else{
+                            $('#error').html('email available')
+                        }
+
+                    }
+                })
+            })
+            
+        })
+    </script>
 </body>
 </html>

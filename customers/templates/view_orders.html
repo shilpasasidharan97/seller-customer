@@ -25,6 +25,17 @@
                         <th>Status</th>
                       </tr>
                     </thead>
+                    {% for order in orders%}
+                    <tr>
+                      <td><img src="{{order.product_id.product_image.url}}" alt=""></td>
+                      <td>{{order.product_id.product_name}}</td>
+                      <td>{{order.quantity}}</td>
+                      <td>{{order.total_amount}}</td>
+                      <td>{{order.order_date}}</td>
+                      <td>{{order.shipping_address}}</td>
+                      <td>{{order.status}}</td>
+                    </tr>
+                    {% endfor %}
                   </table>
             </div>
         </div>
