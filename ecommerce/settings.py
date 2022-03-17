@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-8%17x1lud&pn0#+o7d9_s3sl5!=1eu1smta3!!hhovr!d+9**d
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -42,9 +42,11 @@ INSTALLED_APPS = [
     'customers',
     'sellers',
     'owner',
+    'state',
 ]
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -60,7 +62,9 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            BASE_DIR/ 'common/templates'
+            BASE_DIR/ 'common/templates',
+            BASE_DIR/ 'state/templates/state',
+            
         ],
         'APP_DIRS': True,
         'OPTIONS': {

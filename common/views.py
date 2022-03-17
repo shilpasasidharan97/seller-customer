@@ -114,3 +114,4 @@ def check_customer_email(request):
         status=False
     return JsonResponse({'status':status,'email':email})
 
+  
